@@ -76,6 +76,7 @@ body.light-mode::before {
 html {
     scroll-behavior: smooth;
     overflow-x: hidden;
+    width: 100%;
 }
 
 body {
@@ -87,6 +88,8 @@ body {
             #0a0a0a 100%);
     background-attachment: fixed;
     overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -882,34 +885,86 @@ body.light-mode .timeline-progress-dot {
     opacity: 0.8;
 }
 
-/* Responsive Design */
+/* Responsive Design - Vertical Timeline on Mobile */
 @media (max-width: 768px) {
     .timeline {
-        padding-top: 220px;
-        padding-bottom: 220px;
-        gap: 1rem;
+        display: block;
+        padding-top: 0;
+        padding-bottom: 0;
+        padding-left: 2.5rem;
+        padding-right: 0;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    /* Vertical timeline line on the left */
+    .timeline::before {
+        content: '';
+        position: absolute;
+        left: 1rem;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+        height: 100%;
+        background: linear-gradient(180deg,
+                var(--color-text-primary) 0%,
+                var(--color-text-secondary) 50%,
+                var(--color-text-primary) 100%);
+        transform: none;
+        opacity: 0.3;
     }
 
     .timeline-item {
-        min-width: 150px;
-        max-width: 200px;
+        position: relative;
+        min-width: 100%;
+        max-width: 100%;
+        margin-bottom: 2rem;
+        padding-left: 0;
     }
 
+    .timeline-item:last-child {
+        margin-bottom: 0;
+    }
+
+    /* Timeline marker positioned on the left line */
     .timeline-marker {
+        position: absolute;
+        left: -1.5rem;
+        top: 1.5rem;
+        transform: translate(-50%, 0);
         width: 14px;
         height: 14px;
     }
 
-    .timeline-content {
-        padding: 1.5rem 1.25rem;
+    /* Remove connector line on mobile */
+    .timeline-marker::after {
+        display: none;
     }
 
+    /* Timeline content - full width, no absolute positioning */
+    .timeline-content {
+        padding: 1.5rem 1.25rem;
+        position: relative;
+        margin-bottom: 0;
+        margin-top: 0;
+        width: 100%;
+    }
+
+    /* Remove alternating positioning on mobile */
     .timeline-item:nth-child(odd) .timeline-content {
-        margin-bottom: 25px;
+        position: relative;
+        bottom: auto;
+        left: auto;
+        right: auto;
+        margin-bottom: 0;
     }
 
     .timeline-item:nth-child(even) .timeline-content {
-        margin-top: 25px;
+        position: relative;
+        top: auto;
+        left: auto;
+        right: auto;
+        margin-top: 0;
     }
 
     .timeline-title {
@@ -923,16 +978,30 @@ body.light-mode .timeline-progress-dot {
 
 @media (max-width: 480px) {
     .timeline {
-        gap: 0.75rem;
+        padding-left: 2rem;
+    }
+
+    .timeline::before {
+        left: 0.75rem;
     }
 
     .timeline-item {
-        min-width: 120px;
-        max-width: 160px;
+        margin-bottom: 1.75rem;
+    }
+
+    .timeline-marker {
+        left: -1.25rem;
+        width: 12px;
+        height: 12px;
+        top: 1.25rem;
     }
 
     .timeline-content {
         padding: 1.25rem 1rem;
+    }
+
+    .timeline-title {
+        font-size: 1rem;
     }
 }
 
@@ -1341,14 +1410,19 @@ body.light-mode .theme-toggle .moon-icon {
     }
 
     .theme-toggle {
-        width: 40px;
-        height: 40px;
+        width: 44px;
+        height: 44px;
+    }
+
+    .hero-section {
+        overflow: hidden;
     }
 
     .hero-container {
         flex-direction: column-reverse;
         gap: 3rem;
         padding: 0 1rem;
+        max-width: 100%;
     }
 
     .hero-text {
@@ -1372,31 +1446,47 @@ body.light-mode .theme-toggle .moon-icon {
         display: flex;
         flex-direction: column;
         align-items: center;
+        gap: 1rem;
     }
 
     .social-icons {
         justify-content: center;
         flex-wrap: wrap;
+        gap: 1rem;
     }
 
     .social-icon {
         width: 50px;
         height: 50px;
+        min-width: 50px;
+        min-height: 50px;
     }
 
     .download-resume-box {
         width: auto;
         padding: 0.75rem 1.125rem;
+        min-height: 44px;
+    }
+
+    .hero-image {
+        width: 100%;
+        max-width: 260px;
+        margin: 0 auto;
+        position: relative;
     }
 
     .profile-photo {
         width: 260px;
         height: 320px;
+        max-width: 100%;
     }
 
     .hero-image::after {
         width: 260px;
         height: 320px;
+        max-width: calc(100% - 20px);
+        right: -10px;
+        top: 10px;
     }
 
     .about-content,
