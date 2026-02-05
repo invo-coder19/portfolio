@@ -650,6 +650,17 @@ body.light-mode .profile-photo:hover {
     justify-content: flex-start;
 }
 
+/* Hide timeline padding on mobile - will be overridden in media query */
+@media (max-width: 768px) {
+    .timeline-group {
+        margin-bottom: 3rem;
+    }
+
+    .timeline-group-title {
+        margin-bottom: 1.5rem;
+    }
+}
+
 /* Horizontal line in the middle */
 .timeline::before {
     content: '';
@@ -1416,6 +1427,7 @@ body.light-mode .theme-toggle .moon-icon {
 
     .hero-section {
         overflow: hidden;
+        padding-top: 5rem;
     }
 
     .hero-container {
@@ -1423,6 +1435,12 @@ body.light-mode .theme-toggle .moon-icon {
         gap: 3rem;
         padding: 0 1rem;
         max-width: 100%;
+        margin-top: 2rem;
+    }
+
+    /* Hide scroll indicator on mobile */
+    .scroll-indicator {
+        display: none;
     }
 
     .hero-text {
@@ -1493,6 +1511,10 @@ body.light-mode .theme-toggle .moon-icon {
     .skills-content,
     .projects-content {
         padding: 0 1rem;
+    }
+
+    .about-section {
+        padding-top: 4rem;
     }
 
     .section-title {
