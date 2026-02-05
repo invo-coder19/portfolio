@@ -896,33 +896,33 @@ body.light-mode .timeline-progress-dot {
     opacity: 0.8;
 }
 
-/* Responsive Design - Vertical Timeline on Mobile */
+/* Responsive Design - Centered Alternating Timeline on Mobile */
 @media (max-width: 768px) {
     .timeline {
         display: block;
-        padding-top: 1.5rem;
-        padding-bottom: 1.5rem;
-        padding-left: 2.5rem;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+        padding-left: 0;
         padding-right: 0;
         margin-left: 0;
         margin-right: 0;
         position: relative;
     }
 
-    /* Vertical timeline line on the left - starts and ends at dots */
+    /* Vertical timeline line in the CENTER */
     .timeline::before {
         content: '';
         position: absolute;
-        left: 1rem;
-        top: 1.5rem;
-        bottom: 1.5rem;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 2rem;
+        bottom: 2rem;
         width: 3px;
-        height: calc(100% - 3rem);
+        height: calc(100% - 4rem);
         background: linear-gradient(180deg,
                 var(--color-text-primary) 0%,
                 var(--color-text-secondary) 50%,
                 var(--color-text-primary) 100%);
-        transform: none;
         opacity: 0.3;
     }
 
@@ -930,59 +930,78 @@ body.light-mode .timeline-progress-dot {
         position: relative;
         min-width: 100%;
         max-width: 100%;
-        margin-bottom: 2rem;
+        margin-bottom: 3rem;
         padding-left: 0;
+        padding-right: 0;
     }
 
     .timeline-item:last-child {
         margin-bottom: 0;
     }
 
-    /* Timeline marker positioned on the left line */
+    /* Timeline marker positioned on the CENTER line */
     .timeline-marker {
         position: absolute;
-        left: -1.5rem;
-        top: 1.5rem;
-        transform: translate(-50%, 0);
-        width: 14px;
-        height: 14px;
+        left: 50%;
+        top: 2rem;
+        transform: translate(-50%, -50%);
+        width: 16px;
+        height: 16px;
+        z-index: 3;
     }
 
-    /* Remove connector line on mobile */
+    /* Horizontal connector line from marker to content box */
     .timeline-marker::after {
-        display: none;
+        content: '';
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 60px;
+        height: 2px;
+        background: var(--color-text-primary);
+        opacity: 0.3;
+        z-index: 1;
     }
 
-    /* Timeline content - full width, no absolute positioning */
-    .timeline-content {
-        padding: 1.5rem 1.25rem;
-        position: relative;
-        margin-bottom: 0;
-        margin-top: 0;
-        width: 100%;
-    }
-
-    /* Remove alternating positioning on mobile */
+    /* ODD items - Boxes on the RIGHT side */
     .timeline-item:nth-child(odd) .timeline-content {
         position: relative;
-        bottom: auto;
-        left: auto;
-        right: auto;
+        margin-left: calc(50% + 60px);
+        margin-right: 0;
+        width: calc(50% - 80px);
+        max-width: 350px;
+    }
+
+    /* ODD items - Connector goes RIGHT */
+    .timeline-item:nth-child(odd) .timeline-marker::after {
+        left: 100%;
+    }
+
+    /* EVEN items - Boxes on the LEFT side */
+    .timeline-item:nth-child(even) .timeline-content {
+        position: relative;
+        margin-left: auto;
+        margin-right: calc(50% + 60px);
+        width: calc(50% - 80px);
+        max-width: 350px;
+    }
+
+    /* EVEN items - Connector goes LEFT */
+    .timeline-item:nth-child(even) .timeline-marker::after {
+        right: 100%;
+    }
+
+    /* Timeline content styling */
+    .timeline-content {
+        padding: 1.5rem 1.25rem;
+        margin-top: 0;
         margin-bottom: 0;
     }
 
-    .timeline-item:nth-child(even) .timeline-content {
-        position: relative;
-        top: auto;
-        left: auto;
-        right: auto;
-        margin-top: 0;
-    }
-
-    /* Glowing progress dot for mobile vertical timeline */
+    /* Glowing progress dot for mobile centered timeline */
     .timeline-progress-dot {
         position: absolute;
-        left: 1rem;
+        left: 50%;
         top: 0;
         transform: translate(-50%, 0);
         width: 18px;
@@ -1016,37 +1035,48 @@ body.light-mode .timeline-progress-dot {
 
 @media (max-width: 480px) {
     .timeline {
-        padding-left: 2rem;
-        padding-top: 1.25rem;
-        padding-bottom: 1.25rem;
+        padding-top: 1.5rem;
+        padding-bottom: 1.5rem;
     }
 
     .timeline::before {
-        left: 0.75rem;
-        top: 1.25rem;
-        bottom: 1.25rem;
-        height: calc(100% - 2.5rem);
+        top: 1.5rem;
+        bottom: 1.5rem;
+        height: calc(100% - 3rem);
     }
 
     .timeline-item {
-        margin-bottom: 1.75rem;
+        margin-bottom: 2.5rem;
     }
 
     .timeline-marker {
-        left: -1.25rem;
-        width: 12px;
-        height: 12px;
-        top: 1.25rem;
+        width: 14px;
+        height: 14px;
     }
 
-    .timeline-progress-dot {
-        left: 0.75rem;
-        width: 16px;
-        height: 16px;
+    .timeline-marker::after {
+        width: 40px;
+    }
+
+    /* ODD items - Boxes on RIGHT */
+    .timeline-item:nth-child(odd) .timeline-content {
+        margin-left: calc(50% + 40px);
+        width: calc(50% - 50px);
+    }
+
+    /* EVEN items - Boxes on LEFT */
+    .timeline-item:nth-child(even) .timeline-content {
+        margin-right: calc(50% + 40px);
+        width: calc(50% - 50px);
     }
 
     .timeline-content {
         padding: 1.25rem 1rem;
+    }
+
+    .timeline-progress-dot {
+        width: 16px;
+        height: 16px;
     }
 
     .timeline-title {
@@ -1465,7 +1495,7 @@ body.light-mode .theme-toggle .moon-icon {
 
     .hero-section {
         overflow: hidden;
-        padding-top: 7rem;
+        padding-top: 10rem;
     }
 
     .hero-container {
@@ -1473,7 +1503,7 @@ body.light-mode .theme-toggle .moon-icon {
         gap: 3rem;
         padding: 0 1rem;
         max-width: 100%;
-        margin-top: 3rem;
+        margin-top: 0;
     }
 
     /* Hide scroll indicator on mobile */
@@ -1522,6 +1552,7 @@ body.light-mode .theme-toggle .moon-icon {
         width: auto;
         padding: 0.75rem 1.125rem;
         min-height: 44px;
+        margin-top: 0.75rem;
     }
 
     .hero-image {

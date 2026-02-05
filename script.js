@@ -407,6 +407,7 @@ function animateTimelineProgressDots() {
         if (markers.length === 0) return;
 
         const timelineRect = timeline.getBoundingClientRect();
+        const isMobile = window.innerWidth <= 768;
 
         // Calculate scroll progress for this specific timeline
         let scrollProgress = 0;
@@ -415,7 +416,6 @@ function animateTimelineProgressDots() {
             // Timeline is in active scroll zone
             const timelineTop = timelineRect.top;
             const activeZoneStart = windowHeight * 0.7;
-            // Reduced scroll distance: use half the timeline height instead of full height
             const activeZoneEnd = -timelineRect.height * 0.5;
 
             // Calculate progress (0 to 1)
@@ -429,11 +429,25 @@ function animateTimelineProgressDots() {
             // Get the active marker's position
             const activeMarker = markers[activeMarkerIndex];
             const markerRect = activeMarker.getBoundingClientRect();
-            const timelineLeft = timelineRect.left;
-            const markerCenter = markerRect.left + (markerRect.width / 2) - timelineLeft;
 
-            // Position the dot at the marker
-            progressDot.style.left = `${markerCenter}px`;
+            if (isMobile) {
+                // Mobile: Centered vertical timeline
+                // Calculate vertical position (top) of the marker within the timeline
+                const timelineTop = timelineRect.top;
+                const markerTop = markerRect.top;
+                const markerVerticalPosition = markerTop - timelineTop;
+
+                // Position the dot at the marker's vertical position
+                progressDot.style.top = `${markerVerticalPosition + markerRect.height / 2}px`;
+            } else {
+                // Desktop: Horizontal timeline
+                const timelineLeft = timelineRect.left;
+                const markerCenter = markerRect.left + (markerRect.width / 2) - timelineLeft;
+
+                // Position the dot at the marker's horizontal position
+                progressDot.style.left = `${markerCenter}px`;
+            }
+
             progressDot.classList.add('active');
         } else {
             progressDot.classList.remove('active');
