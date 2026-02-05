@@ -900,23 +900,24 @@ body.light-mode .timeline-progress-dot {
 @media (max-width: 768px) {
     .timeline {
         display: block;
-        padding-top: 0;
-        padding-bottom: 0;
+        padding-top: 1.5rem;
+        padding-bottom: 1.5rem;
         padding-left: 2.5rem;
         padding-right: 0;
         margin-left: 0;
         margin-right: 0;
+        position: relative;
     }
 
-    /* Vertical timeline line on the left */
+    /* Vertical timeline line on the left - starts and ends at dots */
     .timeline::before {
         content: '';
         position: absolute;
         left: 1rem;
-        top: 0;
-        bottom: 0;
+        top: 1.5rem;
+        bottom: 1.5rem;
         width: 3px;
-        height: 100%;
+        height: calc(100% - 3rem);
         background: linear-gradient(180deg,
                 var(--color-text-primary) 0%,
                 var(--color-text-secondary) 50%,
@@ -978,6 +979,32 @@ body.light-mode .timeline-progress-dot {
         margin-top: 0;
     }
 
+    /* Glowing progress dot for mobile vertical timeline */
+    .timeline-progress-dot {
+        position: absolute;
+        left: 1rem;
+        top: 0;
+        transform: translate(-50%, 0);
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: var(--color-text-primary);
+        z-index: 10;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s ease, top 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        will-change: top, opacity;
+        box-shadow:
+            0 0 20px var(--color-text-primary),
+            0 0 40px var(--color-text-primary),
+            0 0 60px rgba(255, 255, 255, 0.5);
+        animation: pulseGlow 2s ease-in-out infinite;
+    }
+
+    .timeline-progress-dot.active {
+        opacity: 1;
+    }
+
     .timeline-title {
         font-size: 1.1rem;
     }
@@ -990,10 +1017,15 @@ body.light-mode .timeline-progress-dot {
 @media (max-width: 480px) {
     .timeline {
         padding-left: 2rem;
+        padding-top: 1.25rem;
+        padding-bottom: 1.25rem;
     }
 
     .timeline::before {
         left: 0.75rem;
+        top: 1.25rem;
+        bottom: 1.25rem;
+        height: calc(100% - 2.5rem);
     }
 
     .timeline-item {
@@ -1005,6 +1037,12 @@ body.light-mode .timeline-progress-dot {
         width: 12px;
         height: 12px;
         top: 1.25rem;
+    }
+
+    .timeline-progress-dot {
+        left: 0.75rem;
+        width: 16px;
+        height: 16px;
     }
 
     .timeline-content {
@@ -1427,7 +1465,7 @@ body.light-mode .theme-toggle .moon-icon {
 
     .hero-section {
         overflow: hidden;
-        padding-top: 5rem;
+        padding-top: 7rem;
     }
 
     .hero-container {
@@ -1435,7 +1473,7 @@ body.light-mode .theme-toggle .moon-icon {
         gap: 3rem;
         padding: 0 1rem;
         max-width: 100%;
-        margin-top: 2rem;
+        margin-top: 3rem;
     }
 
     /* Hide scroll indicator on mobile */
