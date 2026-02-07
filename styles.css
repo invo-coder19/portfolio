@@ -909,21 +909,24 @@ body.light-mode .timeline-progress-dot {
         position: relative;
     }
 
-    /* Vertical timeline line in the CENTER */
+    /* Hide global line on mobile */
     .timeline::before {
+        display: none;
+    }
+
+    /* Segmented Vertical Lines - from current dot to next dot */
+    .timeline-item:not(:last-child)::before {
         content: '';
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
         top: 2rem;
-        bottom: 2rem;
         width: 3px;
-        height: calc(100% - 4rem);
-        background: linear-gradient(180deg,
-                var(--color-text-primary) 0%,
-                var(--color-text-secondary) 50%,
-                var(--color-text-primary) 100%);
-        opacity: 0.3;
+        height: calc(100% + 3rem - 2px);
+        /* Height of item + margin to next item - buffer */
+        background: var(--color-text-primary);
+        opacity: 1;
+        z-index: -1;
     }
 
     .timeline-item {
@@ -956,11 +959,11 @@ body.light-mode .timeline-progress-dot {
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        width: 60px;
+        width: 54px;
         height: 2px;
         background: var(--color-text-primary);
-        opacity: 0.3;
-        z-index: 1;
+        opacity: 1;
+        z-index: -1;
     }
 
     /* ODD items - Boxes on the RIGHT side */
@@ -975,6 +978,8 @@ body.light-mode .timeline-progress-dot {
     /* ODD items - Connector goes RIGHT */
     .timeline-item:nth-child(odd) .timeline-marker::after {
         left: 100%;
+        top: 50%;
+        bottom: auto;
     }
 
     /* EVEN items - Boxes on the LEFT side */
@@ -989,6 +994,9 @@ body.light-mode .timeline-progress-dot {
     /* EVEN items - Connector goes LEFT */
     .timeline-item:nth-child(even) .timeline-marker::after {
         right: 100%;
+        left: auto;
+        top: 50%;
+        bottom: auto;
     }
 
     /* Timeline content styling */
@@ -1495,7 +1503,7 @@ body.light-mode .theme-toggle .moon-icon {
 
     .hero-section {
         overflow: hidden;
-        padding-top: 10rem;
+        padding-top: 6rem;
     }
 
     .hero-container {
@@ -1766,8 +1774,8 @@ body.light-mode .theme-toggle .moon-icon {
     }
 
     .timeline {
-        padding-top: 180px;
-        padding-bottom: 180px;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
     }
 
     .skill-card {
