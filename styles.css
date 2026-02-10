@@ -1568,7 +1568,7 @@ body.light-mode .theme-toggle .moon-icon {
     .hero-image {
         width: 100%;
         max-width: 260px;
-        margin: 0 auto;
+        margin: 3rem auto 0;
         position: relative;
         display: flex;
         justify-content: center;
